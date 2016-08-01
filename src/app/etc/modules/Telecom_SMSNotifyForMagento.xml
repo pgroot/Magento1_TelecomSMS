@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Telecom_SMSNotifier>
+            <active>true</active>
+            <codePool>community</codePool>
+        </Telecom_SMSNotifier>
+        <depends>
+            <Mage_Core />
+            <Mage_Sales />
+        </depends>
+    </modules>
+</config>

@@ -1,0 +1,82 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+<!--
+Default layout, loads most of the pages
+-->
+
+    <smsnotify_adminhtml_index>
+        <reference name="head">
+            <action method="addCss"><name>smsnotify.css</name></action>
+        </reference>
+        <reference name="content">
+            <block type="smsnotify/adminhtml_send" name="smsnotify" >
+                <block type="smsnotify/adminhtml_send_form" name="form" />
+            </block>
+        </reference>
+    </smsnotify_adminhtml_index>
+    
+    <adminhtml_system_config_edit>
+        <reference name="head">
+            <action method="addCss"><name>smsnotify.css</name></action>
+        </reference>
+        <reference name="head">
+            <action method="addJs"><script>Telecom/numberfilters.js</script></action>
+            <action method="addCss"><name>smsnotify.css</name></action>
+        </reference>
+    </adminhtml_system_config_edit>
+    
+    <adminhtml_sales_order_view>
+        <reference name="head">
+            <action method="addCss"><name>smsnotify.css</name></action>
+        </reference>
+        <reference name="order_history">
+            <action method="setTemplate"><template>smsnotify/order/view/history.phtml</template></action>
+        </reference>
+    </adminhtml_sales_order_view>
+    
+    <adminhtml_sales_order_invoice_view>
+        <reference name="head">
+            <action method="addCss"><name>smsnotify.css</name></action>
+        </reference>
+        <reference name="order_comments">
+            <action method="setTemplate"><template>smsnotify/order/comments/view.phtml</template></action>
+        </reference>
+    </adminhtml_sales_order_invoice_view>
+    
+    <adminhtml_sales_order_shipment_view>
+        <reference name="head">
+            <action method="addCss"><name>smsnotify.css</name></action>
+        </reference>
+        <reference name="order_comments">
+            <action method="setTemplate"><template>smsnotify/order/comments/view.phtml</template></action>
+        </reference>
+    </adminhtml_sales_order_shipment_view>
+    
+    <adminhtml_sales_order_addcomment>
+        <reference name="head">
+            <action method="addCss"><name>smsnotify.css</name></action>
+        </reference>
+        <reference name="order_history">
+            <action method="setTemplate"><template>smsnotify/order/view/history.phtml</template></action>
+        </reference>
+    </adminhtml_sales_order_addcomment>
+        
+    <adminhtml_sales_order_invoice_addcomment>
+        <reference name="head">
+            <action method="addCss"><name>smsnotify.css</name></action>
+        </reference>
+        <reference name="order_comments">
+            <action method="setTemplate"><template>smsnotify/order/comments/view.phtml</template></action>
+        </reference>
+    </adminhtml_sales_order_invoice_addcomment>
+    
+    <adminhtml_sales_order_shipment_addcomment>
+        <reference name="head">
+            <action method="addCss"><name>smsnotify.css</name></action>
+        </reference>
+        <reference name="order_comments">
+            <action method="setTemplate"><template>smsnotify/order/comments/view.phtml</template></action>
+        </reference>
+    </adminhtml_sales_order_shipment_addcomment>
+    
+</layout>

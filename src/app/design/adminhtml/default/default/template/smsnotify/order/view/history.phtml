@@ -1,0 +1,183 @@
+<?php
+
+?>
+<?php
+
+$suburl  = Mage::helper("adminhtml")->getUrl('smsnotify/adminhtml/smscomment', array('order_id' => $this->getOrder()->getId()));
+$onclick = "submitAndReloadArea($('order_history_block').parentNode, '".$suburl."')";
+$button  = $this->getLayout()->createBlock('adminhtml/widget_button')->setData(array(
+	'label'   => Mage::helper('smsnotify')->__('Send SMS'),
+	'class'   => 'save',
+	'onclick' => $onclick
+));
+$this->setChild('sms_button', $button);
+
+$this->unsetChild('submit_button');
+$suburl  = Mage::helper("adminhtml")->getUrl('adminhtml/sales_order/addComment', array('order_id' => $this->getOrder()->getId()));
+$onclick = "submitAndReloadArea($('order_history_block').parentNode, '".$suburl."')";
+$button  = $this->getLayout()->createBlock('adminhtml/widget_button')->setData(array(
+		'label'   => Mage::helper('sales')->__('Submit Comment'),
+		'class'   => 'save',
+		'onclick' => $onclick
+));
+$this->setChild('submit_button', $button);
+
+?>
+<div id="order_history_block">
+
+    <?php if ($this->canAddComment()):?>
+    <div id="history_form" class="order-history-form">
+        <div><?php echo Mage::helper('sales')->__('Add Order Comments') ?></div>
+        <span class="field-row status-field-row">
+            <label class="normal" for="history_status"><?php echo Mage::helper('sales')->__('Status') ?></label><br/>
+            <select name="history[status]" class="select" id="history_status">
+            <?php foreach ($this->getStatuses() as $_code=>$_label): ?>
+                <option value="<?php echo $_code ?>"<?php if($_code==$this->getOrder()->getStatus()): ?> selected="selected"<?php endif; ?>><?php echo $_label ?></option>
+            <?php endforeach; ?>
+            </select>
+        </span>
+
+        <div class="menu">
+        	<div class="menu-item first" id="menu-item-comment" ><?php echo Mage::helper('sales')->__('Comment') ?></div>
+        	<div class="menu-item" id="menu-item-sms"><?php echo Mage::helper('smsnotify')->__('SMS') ?></div>
+        </div>
+
+        <div class="clear"></div>
+
+        <div id="history-comment" class="history-form">
+	        <span class="field-row">
+	            <label class="normal" for="history_comment"><?php echo Mage::helper('sales')->__('Comment') ?></label>
+	            <textarea name="history[comment]" rows="3" cols="5" style="height:6em; width:99%;" id="history_comment"></textarea>
+	        </span>
+	        <div class="f-left">
+	            <?php if ($this->canSendCommentEmail()): ?>
+	                <input name="history[is_customer_notified]" type="checkbox" id="history_notify" value="1" /><label class="normal" for="history_notify"> <?php echo Mage::helper('sales')->__('Notify Customer by Email') ?></label><br />
+	            <?php endif; ?>
+	            <input name="history[is_visible_on_front]" type="checkbox" id="history_visible" value="1" /><label class="normal" for="history_visible"> <?php echo Mage::helper('sales')->__('Visible on Frontend') ?></label>
+	        </div>
+	        <div class="f-right">
+	            <?php echo $this->getChildHtml('submit_button') ?>
+	        </div>
+	        <div class="clear"></div>
+        </div>
+
+
+
+        <div id="history-sms" class="history-form">
+	        <span class="field-row">
+				<?php $control = new Varien_Data_Form_Element_Smstextarea(array('html_id'=>'sms_comment', 'name'=>'sms_comment')) ?>
+				<?php echo $control->getElementHtml() ?>
+	        </span>
+	        <div class="f-right">
+	            <?php echo $this->getChildHtml('sms_button') ?>
+	        </div>
+	        <div class="clear"></div>
+        </div>
+
+        <script type="text/javascript">
+		//<![CDATA[
+
+				if ((typeof(last_button_sms) == "undefined") || !last_button_sms)
+				{
+					$('menu-item-comment').addClassName('active');
+					$('history-sms').hide();
+				}
+				else
+				{
+					$('menu-item-sms').addClassName('active');
+					$('history-comment').hide();
+				}
+
+				$$('#history-comment button').first().observe('click', function(event) {
+					last_button_sms = false;
+				});
+
+				$$('#history-sms button').first().observe('click', function(event) {
+					last_button_sms = true;
+				});
+
+				$('menu-item-comment').observe('click', function(event) {
+					$('history-sms').hide();
+					$('menu-item-sms').removeClassName('active');
+					$('history-comment').show();
+					$('menu-item-comment').addClassName('active');
+				});
+				$('menu-item-sms').observe('click', function(event) {
+					$('history-comment').hide();
+					$('menu-item-comment').removeClassName('active');
+					$('history-sms').show();
+					$('menu-item-sms').addClassName('active');
+				});
+				sms_comment_smstextarea_reloading();
+		//]]>
+        </script>
+
+        <div class="clear"></div>
+    </div>
+    <div class="divider"></div>
+    <?php endif;?>
+
+
+    <ul class="note-list">
+    <?php foreach ($this->getOrder()->getStatusHistoryCollection(true) as $_item): ?>
+    	<?php
+			$comment = $_item->getComment();
+
+			if ($comment && strpos($comment, Telecom_SMSNotifier_Helper_Data::SMS_MARK) === 0)
+			{
+				$sms	 = true;
+				$parts   = explode(';', $comment);
+				$role    = $parts[1];
+				$send    = $parts[2];
+				$comment = implode(';', array_slice($parts, 3));
+			}
+			else
+			{
+				unset($sms);
+				unset($parts);
+				unset($role);
+				unset($send);
+			}
+		?>
+        <li <?php if (isset($sms)) echo 'class="mobil"' ?> >
+            <strong><?php echo $this->helper('core')->formatDate($_item->getCreatedAtDate(), 'medium') ?></strong>
+            <?php echo $this->helper('core')->formatTime($_item->getCreatedAtDate(), 'medium') ?>
+            <?php if ($_item->getStatusLabel()): ?>
+            	<span class="separator">|</span><strong><?php echo $_item->getStatusLabel() ?></strong>
+            <?php endif ?>
+            <br/>
+            <small>
+	            <?php if (isset($role)): ?>
+	            	<?php echo $this->escapeHtml($role) ?>
+	            <?php else: ?>
+	            	<?php echo $this->helper('sales')->__('Customer') ?>
+	            <?php endif ?>
+	            <strong class="subdue">
+	                <?php if ($this->isCustomerNotificationNotApplicable($_item)): ?>
+	                	<?php echo $this->helper('sales')->__('Notification Not Applicable') ?>
+	                <?php elseif (isset($send) && $send == 0): ?>
+	                	<?php echo $this->helper('sales')->__('Not Notified') ?>
+	                	<!--<img style="position:relative;top:2px;" src="<?php // echo $this->getSkinUrl('images/ico_mobil.png') ?>" width="16" height="16" alt="" /-->
+	                	<img style="position:relative;top:2px;" src="<?php echo $this->getSkinUrl('images/error_msg_icon.gif') ?>" width="16" height="16" alt="" />
+	                <?php elseif (isset($send) && $send == 1): ?>
+	                	<?php echo $this->helper('sales')->__('Notified') ?>
+	                	<!--img style="position:relative;top:2px;" src="<?php // echo $this->getSkinUrl('images/ico_mobil.png') ?>" width="16" height="16" alt="" /-->
+	                	<img src="<?php echo $this->getSkinUrl('images/ico_success.gif') ?>" width="16" height="16" alt="" />
+	                <?php elseif ($_item->getIsCustomerNotified()): ?>
+	                	<?php echo $this->helper('sales')->__('Notified') ?>
+	                	<img src="<?php echo $this->getSkinUrl('images/ico_success.gif') ?>" width="16" height="16" alt="" />
+	                <?php else: ?>
+	                	<?php echo $this->helper('sales')->__('Not Notified') ?>
+	                <?php endif; ?>
+	            </strong>
+            </small>
+            <?php if ($comment): ?>
+                <br/><?php echo $this->escapeHtml($comment, array('b','br','strong','i','u')) ?>
+            <?php endif; ?>
+        </li>
+    <?php endforeach; ?>
+    </ul>
+    <script type="text/javascript">
+    if($('order_status'))$('order_status').update('<?php echo $this->getOrder()->getStatusLabel() ?>');
+    </script>
+</div>

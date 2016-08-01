@@ -1,0 +1,25 @@
+<adminhtml>
+    <menu>
+      <system>
+          <children>
+              <smsnotify translate="title" module="smsnotify">
+                  <title>SMS Notifier</title>
+                  <action>smsnotify/adminhtml</action>
+                  <sort_order>16</sort_order>
+                  <children>
+                    <send>
+                        <title>Send SMS</title>
+                        <action>smsnotify/adminhtml</action>
+                        <sort_order>10</sort_order>
+                    </send>
+                    <config>
+                        <title>Configuration</title>
+                        <action>adminhtml/system_config/edit/section/smsnotify</action>
+                        <sort_order>20</sort_order>
+                    </config>
+                  </children>
+              </smsnotify>
+          </children>
+      </system>  
+  </menu> 
+</adminhtml>

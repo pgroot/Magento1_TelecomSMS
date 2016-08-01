@@ -1,0 +1,16 @@
+src/app/code/community/Telecom/SMSNotifier app/code/community/Telecom/SMSNotifier/
+src/app/design/adminhtml/default/default/layout/smsnotify.xml app/design/adminhtml/default/default/layout/smsnotify.xml
+src/app/design/adminhtml/default/default/template/smsnotify app/design/adminhtml/default/default/template/smsnotify/
+src/app/etc/modules/Telecom_SMSNotifyForMagento.xml app/etc/modules/Telecom_SMSNotifyForMagento.xml
+src/app/locale/en_US/Telecom_SMSNotify.csv app/locale/en_US/Telecom_SMSNotify.csv
+src/app/locale/zh_CN/Telecom_SMSNotify.csv app/locale/zh_CN/Telecom_SMSNotify.csv
+src/js/Telecom js/Telecom
+src/lib/Telecom lib/Telecom
+src/lib/Varien/Data/Form/Element/Accountinfo.php lib/Varien/Data/Form/Element/Accountinfo.php
+src/lib/Varien/Data/Form/Element/Numberfilters.php lib/Varien/Data/Form/Element/Numberfilters.php
+src/lib/Varien/Data/Form/Element/Selectdynamic.php lib/Varien/Data/Form/Element/Selectdynamic.php
+src/lib/Varien/Data/Form/Element/Selectex.php lib/Varien/Data/Form/Element/Selectex.php
+src/lib/Varien/Data/Form/Element/Smstextarea.php lib/Varien/Data/Form/Element/Smstextarea.php
+src/skin/adminhtml/default/default/images/entry_edit_head_arrow_x.gif skin/adminhtml/default/default/images/entry_edit_head_arrow_x.gif
+src/skin/adminhtml/default/default/images/ico_mobil.png skin/adminhtml/default/default/images/ico_mobil.png
+src/skin/adminhtml/default/default/smsnotify.css skin/adminhtml/default/default/smsnotify.css
