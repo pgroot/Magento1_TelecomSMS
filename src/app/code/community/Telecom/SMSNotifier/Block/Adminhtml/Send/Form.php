@@ -37,17 +37,29 @@ class Telecom_SMSNotifier_Block_Adminhtml_Send_Form extends Mage_Adminhtml_Block
         	'options' => Mage::getModel('smsnotify/system_config_source_sendToAdmin')->toOptions()
         ));
 
+
         $fieldset2 = $form->addFieldset('textsms_fieldset', array(
-        	'legend' => Mage::helper('smsnotify')->__('SMS Text'),
+        	'legend' => Mage::helper('smsnotify')->__('SMS Content'),
         	'class'  => 'fieldset-wide'
         ));
 
         $fieldset2->addType('smstextarea', 'Varien_Data_Form_Element_Smstextarea');
+
+        $fieldset2->addField('sms_template_id', 'text', array(
+            'name'		=> 'sms_template_id',
+            'label'		=> Mage::helper('smsnotify')->__('Message Template ID'),
+            'required'	=> true
+        ));
+
         $fieldset2->addField('sms_text', 'smstextarea', array(
         	'name'		=> 'sms_text',
-        	'label'		=> Mage::helper('smsnotify')->__('Message'),
+        	'label'		=> Mage::helper('smsnotify')->__('Message Param'),
         	'required'	=> true
         ));
+
+
+
+
 
         $form->setUseContainer(true);
         $this->setForm($form);

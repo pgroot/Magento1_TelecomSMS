@@ -36,7 +36,7 @@ class Telecom_SMSNotifier_Model_Sms_Template extends Varien_Object
 	 * Process message text. Method replaces the special marks {{ ... }}
 	 * by the meaningful words (customer firstname, order number ...).
 	 *
-	 * If $text is not a string or is undefined method returns empty string.
+	 * If $text is not a string or is undefined method returns '{}'.
 	 *
 	 * If $type is not Telecom_SMSNotifier_Model_Sms::TYPE_CUSTOMER or
 	 * Telecom_SMSNotifier_Model_Sms::TYPE_ADMIN then argument will set
@@ -53,15 +53,19 @@ class Telecom_SMSNotifier_Model_Sms_Template extends Varien_Object
 	public function process($text, $type = Telecom_SMSNotifier_Model_Sms::TYPE_CUSTOMER)
 	{
 		if (!$text || !is_string($text))
-			return "";
+			return '{}';
 
 		if (!in_array($type, array(Telecom_SMSNotifier_Model_Sms::TYPE_CUSTOMER, Telecom_SMSNotifier_Model_Sms::TYPE_ADMIN)))
 			$type = Telecom_SMSNotifier_Model_Sms::TYPE_CUSTOMER;
 
-		$text = $this->_processCustomerMarks($text, $type);
-		$text = $this->_processSaleMarks($text);
+		$data1 = $this->_processCustomerMarks($text, $type);
+		$data2 = $this->_processSaleMarks($text);
 
-		return $text;
+        $data = array_merge($data1,$data2);
+
+        if(empty($data)) return '{}';
+
+		return json_encode($data);
 	}
 
 
@@ -93,11 +97,14 @@ class Telecom_SMSNotifier_Model_Sms_Template extends Varien_Object
 			$lastname  = 'admin';
 		}
 
-		$text = str_replace(self::CUSTOMER_FIRSTNAME, $firstname, $text);
-		$text = str_replace(self::CUSTOMER_LASTNAME, $lastname, $text);
-		$text = str_replace(self::CUSTOMER_EMAIL, $email, $text);
+		preg_match_all("/{{(.*?)}}/",$text,$matches);
+        if(empty($matches[1])) return array();
 
-		return $text;
+        $map = array();
+        foreach($matches[1] as $key) {
+            if(isset($$key)) $map[$key] = $$key;
+        }
+		return $map;
 	}
 
 
@@ -176,15 +183,14 @@ class Telecom_SMSNotifier_Model_Sms_Template extends Varien_Object
 			$shipment = $this->getShipment()->getIncrementId();
 		}
 
-		$text = str_replace(self::SALE_FIRSTNAME, $firstname, $text);
-		$text = str_replace(self::SALE_LASTNAME, $lastname, $text);
-		$text = str_replace(self::SALE_EMAIL, $email, $text);
-		$text = str_replace(self::SALE_AMOUNT, $amount, $text);
-		$text = str_replace(self::SALE_ORDER_NR, $order, $text);
-		$text = str_replace(self::SALE_INVOICE_NR, $invoice, $text);
-		$text = str_replace(self::SALE_SHIPMENT_NR, $shipment, $text);
+        preg_match_all("/{{(.*?)}}/",$text,$matches);
+        if(empty($matches[1])) return array();
 
-		return $text;
+        $map = array();
+        foreach($matches[1] as $key) {
+            if(isset($$key)) $map[$key] = $$key;
+        }
+        return $map;
 	}
 
 
@@ -226,6 +232,12 @@ class Telecom_SMSNotifier_Model_Sms_Template extends Varien_Object
 		return $value;
 	}
 
+
+	protected function _makeKey($mark) {
+	    $mark = str_replace("{{","",$mark);
+        $mark = str_replace("}}","",$mark);
+        return $mark;
+    }
 
 
 	/**

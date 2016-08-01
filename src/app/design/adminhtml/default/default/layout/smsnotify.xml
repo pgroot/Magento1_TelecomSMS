@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <layout version="0.1.0">
 <!--
-Default layout, loads most of the pages
+Default layout
 -->
 
     <smsnotify_adminhtml_index>
@@ -20,7 +20,7 @@ Default layout, loads most of the pages
             <action method="addCss"><name>smsnotify.css</name></action>
         </reference>
         <reference name="head">
-            <action method="addJs"><script>Telecom/numberfilters.js</script></action>
+            <action method="addJs"><script>telecom/numberfilters.js</script></action>
             <action method="addCss"><name>smsnotify.css</name></action>
         </reference>
     </adminhtml_system_config_edit>

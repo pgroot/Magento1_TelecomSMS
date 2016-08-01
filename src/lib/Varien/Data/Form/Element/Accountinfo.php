@@ -22,36 +22,16 @@ class Varien_Data_Form_Element_Accountinfo extends Varien_Data_Form_Element_Abst
         if (!$statusError)
         {
         	$info 	  = $service->getCreditInfo();
-        	$purchase = $service->getCreditPurchaseInfo();
-        	$username = $service->getUsername();
-        	$apikey   = $service->getApikey();
-
-        	$creditLabel	 = $helper->__('Your credit');
-        	$exhaustionLabel = $helper->__('Estimated credit exhaustion');
-        	$purchaseLabel   = $helper->__('Purchase');
-        	$purchaseText    = $helper->__('Purchase credit now');
-
-        	$credit = $this->_formatPrice($info['credit']);
-        	$exhaus = $info['exhaustion'] ? $this->_formatTime($info['exhaustion']) : '<small>'.$helper->__('No data for computation').'</small>';
-
-        	$opts = $purchase['creditValues'];
-        	$link = $purchase['link'];
+            $access_token = $info['access_token'];
+            $created_at = $info['created_at'];
+            $expires_in = $info['expires_in'];
+            $expired_at = empty($created_at) ? '': date('Y-m-d H:i:s',strtotime($created_at) + $expires_in);
 
             $html  = "";
-            $html .= "<tr><td></td><td colspan=\"1\"><span class=\"smscredit\">$creditLabel:&nbsp;<b>$credit</b></span></td></tr>";
-            $html .= "<tr><td></td><td colspan=\"1\"><span class=\"exhaus\">$exhaustionLabel:&nbsp;<b>$exhaus</b></span></td></tr>";
+            $html .= "<tr><td></td><td colspan=\"1\"><span class=\"smscredit\">Token:&nbsp;<b>$access_token</b></span></td></tr>";
+            $html .= "<tr><td></td><td colspan=\"1\"><span class=\"smscredit\">created at:&nbsp;<b>$created_at</b></span></td></tr>";
+            $html .= "<tr><td></td><td colspan=\"1\"><span class=\"smscredit\">expired at:&nbsp;<b>$expired_at</b></span></td></tr>";
             $html .= "<tr><td></td><td colspan=\"1\">";
-            $html .= "$purchaseText<br />";
-            $html .= "<select id=\"smscreditamount\">";
-
-            foreach ($opts as $k=>$v)
-            	$html .= "<option value=\"".$k."\">".$v."</option>";
-
-            $html .= "</select>";
-            $html .= "<button id=\"smspurchasebutton\" type=\"button\">$purchaseLabel</button>";
-         	$html .= "</td></tr>";
-
-         	$html .= $this->getJavascript($link, $username, $apikey);
         }
         else
         {

@@ -69,9 +69,9 @@ class Varien_Data_Form_Element_Smstextarea extends Varien_Data_Form_Element_Text
         $this->addClass('textarea');
         $html = '';
 
-        $html .= '<span class="'.$id.'-static-value">'.$helper->__('Remain <b><span class="%s"></span></b> characters to new message.', $remain).'</span>';
-        $html .= '<span class="'.$id.'-dynamic-value">'.$helper->__('Remain about <b><span class="%s"></span></b> characters to new message.', $remain).'</span>';
-        $html .= '<br />';
+        //$html .= '<span class="'.$id.'-static-value">'.$helper->__('Remain <b><span class="%s"></span></b> characters to new message.', $remain).'</span>';
+        //$html .= '<span class="'.$id.'-dynamic-value">'.$helper->__('Remain about <b><span class="%s"></span></b> characters to new message.', $remain).'</span>';
+        //$html .= '<br />';
         $html .= '<p class="button-bar">';
         $html .= '<span>'.$helper->__('Variables:').'</span>';
         if ($id == 'sms_text')
@@ -97,14 +97,14 @@ class Varien_Data_Form_Element_Smstextarea extends Varien_Data_Form_Element_Text
         $html .= '<textarea id="'.$id.'" name="'.$this->getName().'" '.$this->serialize($this->getHtmlAttributes()).' >';
         $html .= $this->getEscapedValue();
         $html .= "</textarea>";
-        $html .= '<span class="'.$id.'-static-value">'.$helper->__('You have written <b><span class="%s"></span></b> character(s).', $chars).'</span> ';
-        $html .= '<span class="'.$id.'-dynamic-value">'.$helper->__('You have written about <b><span class="%s"></span></b> character(s).', $chars).'</span> ';
-        $html .= '<span class="'.$id.'-static-value">'.$helper->__('Text will be sended as <b><span class="%s"></span></b> message(s).', $messages).'</span>';
-        $html .= '<span class="'.$id.'-dynamic-value">'.$helper->__('Text will be sended perhaps as <b><span class="%s"></span></b> message(s).', $messages).'</span>';
-        $html .= '<br class="'.$id.'-dynamic-value" /><span class="'.$id.'-dynamic-value">'.$helper->__('Keep in mind that if you use variables then the values on counters above are only estimates. Really length of message depends on values of those variables. The texts which are longer than <b>160</b> chars for standard message or <b>70</b> chars for Unicode message will be splitted to more messages.').'</span>';
+        //$html .= '<span class="'.$id.'-static-value">'.$helper->__('You have written <b><span class="%s"></span></b> character(s).', $chars).'</span> ';
+        //$html .= '<span class="'.$id.'-dynamic-value">'.$helper->__('You have written about <b><span class="%s"></span></b> character(s).', $chars).'</span> ';
+        //$html .= '<span class="'.$id.'-static-value">'.$helper->__('Text will be sended as <b><span class="%s"></span></b> message(s).', $messages).'</span>';
+        //$html .= '<span class="'.$id.'-dynamic-value">'.$helper->__('Text will be sended perhaps as <b><span class="%s"></span></b> message(s).', $messages).'</span>';
+        //$html .= '<br class="'.$id.'-dynamic-value" /><span class="'.$id.'-dynamic-value">'.$helper->__('Keep in mind that if you use variables then the values on counters above are only estimates. Really length of message depends on values of those variables. The texts which are longer than <b>160</b> chars for standard message or <b>70</b> chars for Unicode message will be splitted to more messages.').'</span>';
         $html .= '<br />';
-        $html .= '<span class="'.$id.'-ascii"><i>'.$helper->__('Note some special chars (ex.: ^, {, }, \, [, ], ~, |, , newline char) may cost 2 chars.').'</i></span><br class="'.$id.'-ascii" />';
-        $html .= '<span class="'.$id.'-noascii-nounicode"><b>'.$helper->__('You are using Unicode chars, but you did not allow this. All Unicode characters will be replaced with ASCII or removed if replacement is not possible. You can allow Unicode messages <a href="%s">here</a>.', $conurl).'</b></span>';
+        //$html .= '<span class="'.$id.'-ascii"><i>'.$helper->__('Note some special chars (ex.: ^, {, }, \, [, ], ~, |, , newline char) may cost 2 chars.').'</i></span><br class="'.$id.'-ascii" />';
+        //$html .= '<span class="'.$id.'-noascii-nounicode"><b>'.$helper->__('You are using Unicode chars, but you did not allow this. All Unicode characters will be replaced with ASCII or removed if replacement is not possible. You can allow Unicode messages <a href="%s">here</a>.', $conurl).'</b></span>';
         $html .= '<span class="'.$id.'-noascii-unicode"><b>'.$helper->__('Unicode message.').'</b></span>';
         $html .= $this->getAfterElementHtml();
 

@@ -69,6 +69,7 @@ class Telecom_SMSNotifier_Block_Adminhtml_Data_Form_Element_CustomerNumbers exte
 						$('table-numbers-empty-message').addClassName('hidden');
 					}
 					$('customer_numbers').value = vals.join(';');
+					$('search').value = '';
     			}
 	           	new Ajax.Autocompleter(
 	           		searchForm.field,

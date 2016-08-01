@@ -125,6 +125,7 @@
 	           <used_addresses>billing</used_addresses>
 	           <trim_zero>0</trim_zero>
 	           <log>0</log>
+               <with_prefix>0</with_prefix>
 	       </general>
 	       <country_filter>
 	           <type>everywhere</type>

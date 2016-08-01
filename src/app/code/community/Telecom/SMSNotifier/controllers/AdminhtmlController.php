@@ -32,14 +32,6 @@ class Telecom_SMSNotifier_AdminhtmlController extends Mage_Adminhtml_Controller_
 	/**
 	 * Send SMS action.
 	 *
-	 * If $smsText is not defined then action terminates with warning message.
-	 * If credentials (API username, API key) is not configured properly action
-	 * terminates with warning message.
-	 *
-	 * If all is right then action tries to send SMS to all customer numbers
-	 * and to administrator number when is required.
-	 *
-	 * There will be displayed the information messages to each SMS.
 	 */
 	public function saveAction()
 	{
@@ -47,6 +39,7 @@ class Telecom_SMSNotifier_AdminhtmlController extends Mage_Adminhtml_Controller_
 		$text    		 = $this->getRequest()->getParam('sms_text');
 		$admin			 = $this->getRequest()->getParam('admin');
 		$inputNumber	 = $this->getRequest()->getParam('q');
+        $templateId      = $this->getRequest()->getParam('sms_template_id');
 
 		$helper  = Mage::helper('smsnotify');
 		$config  = $this->_getConfig();
@@ -61,14 +54,6 @@ class Telecom_SMSNotifier_AdminhtmlController extends Mage_Adminhtml_Controller_
 			return;
 		}
 
-		// check credentials
-		if ($error = $service->testCredentials())
-		{
-			$this->_getSession()->addError($error);
-			$this->_redirectReferer();
-			return;
-		}
-
 		// send SMS to admin
 		$adminNumber = $this->_getConfig()->getAdminNumberByIndex($admin);
 		if ($adminNumber)
@@ -77,6 +62,7 @@ class Telecom_SMSNotifier_AdminhtmlController extends Mage_Adminhtml_Controller_
 			$adminSms->setType(Telecom_SMSNotifier_Model_Sms::TYPE_ADMIN);
 			$adminSms->setStoreId($storeId);
 			$adminSms->setNumber($adminNumber);
+            $adminSms->setTemplateId($templateId);
 			$adminSms->setText($text);
 
 			if ($service->send($adminSms))
@@ -135,6 +121,7 @@ class Telecom_SMSNotifier_AdminhtmlController extends Mage_Adminhtml_Controller_
 			$customerSms->setStoreId($storeId);
 			$customerSms->setNumber($telephone);
 			$customerSms->setText($messageText);
+            $customerSms->setTemplateId($templateId);
 
 			$alreadySended[] = $telephone;
 

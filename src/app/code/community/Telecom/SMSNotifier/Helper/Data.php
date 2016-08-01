@@ -185,6 +185,16 @@ class Telecom_SMSNotifier_Helper_Data extends Mage_Core_Helper_Abstract
 	}
 
 
+    /**
+     * get sms template id
+     * @param $type
+     * @param $object
+     * @return mixed
+     */
+	public function getTemplateId($type,$object) {
+        return $this->_getConfig()->getTemplateIdForEvent($type, $object->getStoreId());
+    }
+
 	/**
 	 * Get standard configuration model.
 	 *
