@@ -4,7 +4,7 @@ src/app/design/adminhtml/default/default/template/smsnotify app/design/adminhtml
 src/app/etc/modules/Telecom_SMSNotifyForMagento.xml app/etc/modules/Telecom_SMSNotifyForMagento.xml
 src/app/locale/en_US/Telecom_SMSNotify.csv app/locale/en_US/Telecom_SMSNotify.csv
 src/app/locale/zh_CN/Telecom_SMSNotify.csv app/locale/zh_CN/Telecom_SMSNotify.csv
-src/js/Telecom js/Telecom
+src/js/telecom/numberfilters.js js/telecom/numberfilters.js
 src/lib/Telecom lib/Telecom
 src/lib/Varien/Data/Form/Element/Accountinfo.php lib/Varien/Data/Form/Element/Accountinfo.php
 src/lib/Varien/Data/Form/Element/Numberfilters.php lib/Varien/Data/Form/Element/Numberfilters.php
