@@ -2,8 +2,8 @@ src/app/code/community/Telecom/SMSNotifier app/code/community/Telecom/SMSNotifie
 src/app/design/adminhtml/default/default/layout/smsnotify.xml app/design/adminhtml/default/default/layout/smsnotify.xml
 src/app/design/adminhtml/default/default/template/smsnotify app/design/adminhtml/default/default/template/smsnotify/
 src/app/etc/modules/Telecom_SMSNotifyForMagento.xml app/etc/modules/Telecom_SMSNotifyForMagento.xml
-src/app/locale/en_US/ app/locale/en_US/
-src/app/locale/zh_CN/ app/locale/zh_CN/
+src/app/locale/en_US/SMSNotify.csv app/locale/en_US/SMSNotify.csv
+src/app/locale/zh_CN/SMSNotify.csv app/locale/zh_CN/SMSNotify.csv
 src/js/telecom/numberfilters.js js/telecom/numberfilters.js
 src/lib/Telecom lib/Telecom
 src/lib/Varien/Data/Form/Element/Accountinfo.php lib/Varien/Data/Form/Element/Accountinfo.php
